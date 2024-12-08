@@ -3,6 +3,8 @@ document.getElementById("submit").addEventListener("click", startGame);
 
 let player1, player2;
 let currentPlayer;
+let player1Symbol = "X";
+let player2Symbol = "O";
 let board = Array(9).fill(null);
 
 function startGame() {
@@ -12,35 +14,41 @@ function startGame() {
 
   document.getElementById("input-section").style.display = "none";
   document.getElementById("game-section").style.display = "block";
-  updateMessage(`${currentPlayer}, you're up!`);
+  document.getElementById("reset").style.display = "block";
+  updateMessage(`${currentPlayer} (${getSymbol(currentPlayer)}), it's your turn!`);
 
-  document.querySelectorAll(".cell").forEach(cell => {
-    cell.addEventListener("click", handleCellClick);
+  document.querySelectorAll(".cell").forEach((cell, index) => {
     cell.textContent = "";
+    cell.className = "cell"; // Reset cell styling
+    cell.addEventListener("click", () => handleCellClick(cell, index));
   });
 }
 
-function handleCellClick(e) {
-  const cellIndex = e.target.id - 1;
+function handleCellClick(cell, index) {
+  if (board[index] || checkWinner()) return;
 
-  if (board[cellIndex] || checkWinner()) return;
-
-  board[cellIndex] = currentPlayer === player1 ? "X" : "O";
-  e.target.textContent = board[cellIndex];
+  board[index] = getSymbol(currentPlayer);
+  cell.textContent = board[index];
 
   if (checkWinner()) {
-    updateMessage(`${currentPlayer}, congratulations you won!`);
+    const winner = currentPlayer;
+    updateMessage(`${winner} wins!`);
+    highlightWinningCells();
     endGame();
   } else if (board.every(cell => cell !== null)) {
     updateMessage("It's a draw!");
   } else {
     currentPlayer = currentPlayer === player1 ? player2 : player1;
-    updateMessage(`${currentPlayer}, you're up!`);
+    updateMessage(`${currentPlayer} (${getSymbol(currentPlayer)}), it's your turn!`);
   }
 }
 
 function updateMessage(message) {
   document.querySelector(".message").textContent = message;
+}
+
+function getSymbol(player) {
+  return player === player1 ? player1Symbol : player2Symbol;
 }
 
 function checkWinner() {
@@ -50,14 +58,37 @@ function checkWinner() {
     [0, 4, 8], [2, 4, 6] // Diagonals
   ];
 
-  return winningCombinations.some(combination => {
+  for (const combination of winningCombinations) {
     const [a, b, c] = combination;
-    return board[a] && board[a] === board[b] && board[a] === board[c];
-  });
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      return combination;
+    }
+  }
+  return null;
+}
+
+function highlightWinningCells() {
+  const winningCombination = checkWinner();
+  if (winningCombination) {
+    winningCombination.forEach(index => {
+      document.querySelectorAll(".cell")[index].classList.add("winner");
+    });
+  }
 }
 
 function endGame() {
   document.querySelectorAll(".cell").forEach(cell => {
     cell.removeEventListener("click", handleCellClick);
   });
+}
+
+document.getElementById("reset").addEventListener("click", resetGame);
+
+function resetGame() {
+  board = Array(9).fill(null);
+  currentPlayer = player1;
+  document.getElementById("input-section").style.display = "block";
+  document.getElementById("game-section").style.display = "none";
+  document.getElementById("reset").style.display = "none";
+  updateMessage("");
 }
