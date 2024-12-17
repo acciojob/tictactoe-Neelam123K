@@ -1,4 +1,4 @@
-const startButton = document.getElementById('start-game');
+const startButton = document.getElementById('submit');
 const player1Input = document.getElementById('player1');
 const player2Input = document.getElementById('player2');
 const gameBoard = document.getElementById('game-board');
