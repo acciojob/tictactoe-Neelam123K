@@ -1,30 +1,116 @@
-/*  your css code here. If applicable */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  gap: 10px;
-}
-
-.cell {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  border: 1px solid #000;
-  cursor: pointer;
-}
-
-.cell.winner {
-  background-color: lightgreen;
-  font-weight: bold;
-}
-
-.message {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
-
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 90%;
+    width: 400px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(72, 239, 128, 0.7);
+  }
+  
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #48ef80;
+  }
+  
+  label {
+    font-size: 16px;
+    display: block;
+    margin-top: 10px;
+  }
+  
+  input {
+    width: calc(100% - 20px);
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+  }
+  
+  button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00c6ff;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #00c6ff;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .cell {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #48ef80;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .cell:hover {
+    background: rgba(72, 239, 128, 0.3);
+    transform: scale(1.1);
+  }
+  
+  .message {
+    margin-top: 20px;
+    font-size: 18px;
+    text-shadow: 0 0 10px #48ef80;
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .cell {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+    }
+  }
+  
